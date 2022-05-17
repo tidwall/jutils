@@ -1,0 +1,10 @@
+[package]
+name = "jutils"
+version = "0.1.0"
+authors = ["Josh Baker <joshbaker77@gmail.com>"]
+edition = "2021"
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/tidwall/jutils"
+documentation = "https://docs.rs/jutils/"
+description = "JSON Utilities for Rust"
