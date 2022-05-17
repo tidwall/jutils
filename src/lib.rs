@@ -1,5 +1,6 @@
 pub trait JsonExtender {
     fn extend_json_str(&mut self, s: &str);
+    fn extend_json_str_fragment(&mut self, s: &str);
 }
 
 static HEX: &[u8; 16] = br#"0123456789abcdef"#;
@@ -12,9 +13,20 @@ fn extend_hex_16(buf: &mut Vec<u8>, x: u16) {
 }
 
 impl JsonExtender for Vec<u8> {
+    /// Convert provide string into a valid JSON String and append it to the 
+    /// provided Vec<u8>.
     fn extend_json_str(&mut self, s: &str) {
-        let mut tmp = [0u8; 10];
         self.push(b'"');
+        self.extend_json_str_fragment(s);
+        self.push(b'"');
+    }
+    /// Convert provide string into a valid JSON String fragment and append it
+    /// to the provided Vec<u8>. 
+    /// 
+    /// A converted JSON String fragment will not included the wrapped
+    /// quotation characters.
+    fn extend_json_str_fragment(&mut self, s: &str) {
+        let mut tmp = [0u8; 10];
         for c in s.chars() {
             if c < ' ' {
                 self.push(b'\\');
@@ -40,6 +52,5 @@ impl JsonExtender for Vec<u8> {
                 self.extend(c.encode_utf8(&mut tmp).as_bytes());
             }
         }
-        self.push(b'"');
     }
 }
