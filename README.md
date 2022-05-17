@@ -1,4 +1,4 @@
-# jtuils
+# jutils
 
 JSON utilities for Rust.
 
